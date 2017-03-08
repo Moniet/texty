@@ -1,32 +1,108 @@
 <!DOCTYPE HTML>
 <html>
-    <link href="css/texty.css">
 <head>
+    <link href="stylesheets/texty.css" rel="stylesheet">
+    <link href="https://www.googleapis.com/webfonts/v1/webfonts?key=YOUR-API-KEY">
 </head>
 <style>
-    .container {
-        max-width:70%;
-        margin: 0 auto;
-        text-align:center;
+    #hexinput {
+        position:absolute;
+        left:38%;
+        top:48%;
+        position:absolute;
+        margin-top:10px;
     }
-    .text {
-        background:white;
+    #hex {
+        height:23px;
     }
-    
-    header {
-        text-align:center;
-        margin-top:20%
+    h3 {
+        position:absolute;
+        top:35%;
+        left:5%;
+    }
+    #color {
+        margin-left:80%;
+        width:10px;
     }
 </style>
 <body>
+<div class="container">
     <header>
-        <h1 class="uppercase">Text</h1>
-        <h2>Making Text Manipulation Easy</h2>
+        <h1 id="header"></h1>
     </header>
-    <div class="container">
-        <div class="text">
-            <h3 class="thick-bg"></h3>
-        </div>
+    <div class="textarea">
+    <input type="text" id="text" value="Welcome to Texty">
     </div>
+    <div class="buttons">
+        <span class="btn" id="bold">Bold</span>
+        <span class="btn" id="light">Light</span>
+        <span class="btn" id="normal">Normal</span>
+        <span class="btn" id="italic">Italic</span>
+    </div>
+    <div class="fontsize">
+        <span id="fontup"><i class="fa fa-angle-up fa-2x" aria-hidden="true"></i></span>
+        <span id="fontdown"><i class="fa fa-angle-down fa-2x" aria-hidden="true"></i></span>
+    </div>
+    <div id="hexinput">
+        Hex/RGB
+        <input type="text" id="hex" value="rgb(255, 192, 203)">
+    </div>
+    <pre class="prettyprint lang-css">
+         <h3>Your CSS Code:</h3> 
+        <code>
+           
+        </code>
+    </pre>
+</div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://use.fontawesome.com/ed157ca739.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+var textVal = $("#text").val();
+$('h1').addClass(".textshadow").append(textVal);
+
+    $("#text").keyup(function() {
+    $('#header').html($(this).val());
+    });
+    $('#italic').click(
+        function(){
+            $('#header').css("font-style", "italic");
+    });
+    $('#normal').click(
+        function(){
+            $('#header').css("font-style", "normal");
+    });
+    $('#bold').click(
+        function(){
+            $('#header').css("font-weight", "bold");
+    });
+    $('#light').click(
+        function(){
+            $('#header').css("font-weight", "100");
+    });
+    $('#fontup').click(function(){
+        $('#header').css("font-size", "+=1");
+    });
+
+    $('#fontdown').click(function(){
+        $('#header').css("font-size", "-=1");
+    });
+    
+    //rendering css 
+    $('#text, .btn, .fontsize').click(function(){
+        var html = [""];
+        var properties = $("#header").css(["color", "font-size", "font-weight", "font-style",]);
+        $.each(properties, function(prop, value){
+            html.push(prop + ":"+ value + ";");
+        });
+         $('code').html( html.join("<br>"));
+    });
+    
+    $("#hex").keyup(function(){
+        var hexCode = $("#hex").val();
+        $("#header").css("color", hexCode);
+    });
+});
+</script>
 </body>
 </html>
